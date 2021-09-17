@@ -16,20 +16,6 @@ series: bionic
 
 applications:
 
-  aodh:
-    charm: cs:~openstack-charmers-next/aodh
-    num_units: 3
-    options:
-      openstack-origin: *openstack-origin
-      vip: {{ TEST_VIP00 }}
-    constraints: mem=1024 root-disk=6G
-
-  aodh-hacluster:
-    charm: cs:~openstack-charmers-next/hacluster
-    options:
-      cluster_count: 3
-      corosync_transport: unicast
-
 # NOTE(ajkavanagh): barbican is currently disabled as it's not part of the series upgrade tests
 # It is included to make it easier to enable in the future.
 #  barbican:
@@ -41,20 +27,13 @@ applications:
 
   ceilometer:
     charm: cs:~openstack-charmers-next/ceilometer
-    num_units: 3
+    num_units: 1
     options:
       openstack-origin: *openstack-origin
-      vip: {{ TEST_VIP01 }}
     constraints: mem=1024 root-disk=6G
 
   ceilometer-agent:
     charm: cs:~openstack-charmers-next/ceilometer-agent
-
-  ceilometer-hacluster:
-    charm: cs:~openstack-charmers-next/hacluster
-    options:
-      cluster_count: 3
-      corosync_transport: unicast
 
   ceph-mon:
     charm: cs:~openstack-charmers-next/ceph-mon
@@ -75,121 +54,36 @@ applications:
 
   cinder:
     charm: cs:~openstack-charmers-next/cinder
-    num_units: 3
+    num_units: 1
     options:
       block-device: None
       glance-api-version: 2
       openstack-origin: *openstack-origin
-      vip: {{ TEST_VIP02 }}
     constraints: mem=1024 root-disk=6G
 
   cinder-ceph:
     charm: cs:~openstack-charmers-next/cinder-ceph
 
-  cinder-hacluster:
-    charm: cs:~openstack-charmers-next/hacluster
-    options:
-      cluster_count: 3
-      corosync_transport: unicast
-
-  dashboard-hacluster:
-    charm: cs:~openstack-charmers-next/hacluster
-    options:
-      cluster_count: 3
-      corosync_transport: unicast
-
-  designate:
-    charm: cs:~openstack-charmers-next/designate
-    num_units: 3
-    options:
-      nameservers: ns1.mojo.serverstack.com.
-      neutron-domain: ""
-      neutron-domain-email: ""
-      nova-domain: ""
-      nova-domain-email: ""
-      openstack-origin: *openstack-origin
-      vip: {{ TEST_VIP03 }}
-    constraints: mem=1024 root-disk=6G
-
-  designate-bind:
-    charm: cs:~openstack-charmers-next/designate-bind
-    num_units: 3
-    constraints: root-disk=6G
-
-  designate-hacluster:
-    charm: cs:~openstack-charmers-next/hacluster
-    options:
-      cluster_count: 3
-      corosync_transport: unicast
-
-  easyrsa:
-    charm: cs:~containers/easyrsa
-    num_units: 1
-    constraints: root-disk=6G
-
-  etcd:
-    series: bionic
-    charm: cs:~containers/etcd
-    num_units: 3
-    options:
-      channel: 3.1/stable
-    constraints: root-disk=6G
-
   glance:
     charm: cs:~openstack-charmers-next/glance
-    num_units: 3
+    num_units: 1
     options:
       openstack-origin: *openstack-origin
-      vip: {{ TEST_VIP04 }}
     constraints: mem=1024 root-disk=6G
-
-  glance-hacluster:
-    charm: cs:~openstack-charmers-next/hacluster
-    options:
-      cluster_count: 3
-      corosync_transport: unicast
 
   gnocchi:
     charm: cs:~openstack-charmers-next/gnocchi
-    num_units: 3
+    num_units: 1
     options:
       openstack-origin: *openstack-origin
-      vip: {{ TEST_VIP05 }}
     constraints: root-disk=6G
-
-  gnocchi-hacluster:
-    charm: cs:~openstack-charmers-next/hacluster
-    options:
-      cluster_count: 3
-      corosync_transport: unicast
-
-  heat:
-    charm: cs:~openstack-charmers-next/heat
-    num_units: 3
-    options:
-      openstack-origin: *openstack-origin
-      vip: {{ TEST_VIP06 }}
-    constraints: root-disk=6G
-
-  heat-hacluster:
-    charm: cs:~openstack-charmers-next/hacluster
-    options:
-      cluster_count: 3
-      corosync_transport: unicast
 
   keystone:
     charm: cs:~openstack-charmers-next/keystone
-    num_units: 3
+    num_units: 1
     options:
       openstack-origin: *openstack-origin
-      vip: {{ TEST_VIP07 }}
     constraints: mem=1024 root-disk=6G
-
-  keystone-hacluster:
-    charm: cs:~openstack-charmers-next/hacluster
-    options:
-      cluster_count: 3
-      corosync_transport: unicast
 
   memcached:
     charm: cs:memcached
@@ -213,7 +107,7 @@ applications:
 
   neutron-api:
     charm: cs:~openstack-charmers-next/neutron-api
-    num_units: 3
+    num_units: 1
     options:
       manage-neutron-plugin-legacy-mode: True
       dns-domain: mojo.serverstack.
@@ -223,7 +117,6 @@ applications:
       neutron-security-groups: true
       openstack-origin: *openstack-origin
       reverse-dns-lookup: true
-      vip: {{ TEST_VIP09 }}
     constraints: mem=1024 root-disk=6G
 
   neutron-gateway:
@@ -235,42 +128,22 @@ applications:
       openstack-origin: *openstack-origin
     constraints: mem=4096 root-disk=6G
 
-  neutron-hacluster:
-    charm: cs:~openstack-charmers-next/hacluster
-    options:
-      cluster_count: 3
-      corosync_transport: unicast
-
   neutron-openvswitch:
     charm: cs:~openstack-charmers-next/neutron-openvswitch
 
   placement:
     charm: cs:~openstack-charmers-next/placement
-    num_units: 3
+    num_units: 1
     options:
       openstack-origin: *openstack-origin
-      vip: {{ TEST_VIP14 }}
     constraints: root-disk=6G
-
-  placement-hacluster:
-    charm: cs:~openstack-charmers-next/hacluster
-    options:
-      cluster_count: 3
-      corosync_transport: unicast
-
-  nova-cc-hacluster:
-    charm: cs:~openstack-charmers-next/hacluster
-    options:
-      cluster_count: 3
-      corosync_transport: unicast
 
   nova-cloud-controller:
     charm: cs:~openstack-charmers-next/nova-cloud-controller
-    num_units: 3
+    num_units: 1
     options:
       network-manager: Neutron
       openstack-origin: *openstack-origin
-      vip: {{ TEST_VIP10 }}
     constraints: mem=2048 root-disk=6G
 
   nova-compute:
@@ -283,14 +156,6 @@ applications:
       openstack-origin: *openstack-origin
     constraints: mem=4096 root-disk=6G
 
-  openstack-dashboard:
-    charm: cs:~openstack-charmers-next/openstack-dashboard
-    num_units: 3
-    options:
-      openstack-origin: *openstack-origin
-      vip: {{ TEST_VIP11 }}
-    constraints: mem=1024 root-disk=6G
-
   rabbitmq-server:
     charm: cs:~openstack-charmers-next/rabbitmq-server
     num_units: 1
@@ -298,20 +163,13 @@ applications:
       source: *openstack-origin
     constraints: mem=4096 root-disk=6G
 
-  swift-hacluster:
-    charm: cs:~openstack-charmers-next/hacluster
-    options:
-      cluster_count: 3
-      corosync_transport: unicast
-
   swift-proxy:
     charm: cs:~openstack-charmers-next/swift-proxy
-    num_units: 3
+    num_units: 1
     options:
       openstack-origin: *openstack-origin
       replicas: 3
       swift-hash: fdfef9d4-8b06-11e2-8ac0-531c923c8fae
-      vip: {{ TEST_VIP12 }}
       zone-assignment: manual
     constraints: mem=1024 root-disk=6G
 
@@ -347,26 +205,16 @@ applications:
 
   vault:
     charm: cs:~openstack-charmers-next/vault
-    num_units: 3
+    num_units: 1
     options:
       ssl-ca: {{ TEST_CACERT }}
       ssl-cert: {{ TEST_CERT }}
       ssl-key: {{ TEST_KEY }}
-      vip: {{ TEST_VIP13 }}
     constraints: mem=1024 root-disk=6G
-
-  vault-hacluster:
-    charm: cs:~openstack-charmers-next/hacluster
-    options:
-      cluster_count: 3
-      corosync_transport: unicast
 
 relations:
 - - placement:certificates
   - vault:certificates
-
-- - placement:ha
-  - placement-hacluster:ha
 
 - - placement:identity-service
   - keystone:identity-service
@@ -431,9 +279,6 @@ relations:
 - - neutron-gateway:quantum-network-service
   - nova-cloud-controller:quantum-network-service
 
-- - openstack-dashboard:identity-service
-  - keystone:identity-service
-
 - - swift-proxy:identity-service
   - keystone:identity-service
 
@@ -445,12 +290,6 @@ relations:
 
 - - swift-proxy:swift-storage
   - swift-storage-z3:swift-storage
-
-- - heat:identity-service
-  - keystone:identity-service
-
-- - heat:amqp
-  - rabbitmq-server:amqp
 
 - - neutron-gateway:amqp
   - rabbitmq-server:amqp
@@ -500,75 +339,6 @@ relations:
 - - rabbitmq-server:certificates
   - vault:certificates
 
-- - heat:certificates
-  - vault:certificates
-
-- - keystone:ha
-  - keystone-hacluster:ha
-
-- - nova-cloud-controller:ha
-  - nova-cc-hacluster:ha
-
-- - cinder:ha
-  - cinder-hacluster:ha
-
-- - glance:ha
-  - glance-hacluster:ha
-
-- - openstack-dashboard:ha
-  - dashboard-hacluster:ha
-
-- - swift-proxy:ha
-  - swift-hacluster:ha
-
-- - neutron-api:ha
-  - neutron-hacluster:ha
-
-- - heat:ha
-  - heat-hacluster:ha
-
-- - vault:ha
-  - vault-hacluster:ha
-
-- - etcd:certificates
-  - easyrsa:client
-
-- - etcd:db
-  - vault:etcd
-
-- - aodh:amqp
-  - rabbitmq-server:amqp
-
-- - aodh:identity-service
-  - keystone:identity-service
-
-- - aodh:ha
-  - aodh-hacluster:ha
-
-- - designate:identity-service
-  - keystone:identity-service
-
-- - designate:amqp
-  - rabbitmq-server:amqp
-
-- - designate:dns-backend
-  - designate-bind:dns-backend
-
-- - designate:coordinator-memcached
-  - memcached:cache
-
-- - designate:dnsaas
-  - neutron-api:external-dns
-
-- - designate:ha
-  - designate-hacluster:ha
-
-- - aodh:certificates
-  - vault:certificates
-
-- - designate:certificates
-  - vault:certificates
-
 - - gnocchi:storage-ceph
   - ceph-mon:client
 
@@ -608,12 +378,6 @@ relations:
 - - ceilometer-agent:amqp
   - rabbitmq-server:amqp
 
-- - ceilometer:ha
-  - ceilometer-hacluster:ha
-
-- - gnocchi:ha
-  - gnocchi-hacluster:ha
-
 - - ceilometer:certificates
   - vault:certificates
 
@@ -635,25 +399,16 @@ relations:
 #- - barbican:shared-db
 #  - percona-cluster:shared-db
 
-- - heat:shared-db
-  - percona-cluster:shared-db
-
 - - nova-cloud-controller:shared-db
   - percona-cluster:shared-db
 
 - - neutron-api:shared-db
   - percona-cluster:shared-db
 
-- - aodh:shared-db
-  - percona-cluster:shared-db
-
 - - gnocchi:shared-db
   - percona-cluster:shared-db
 
 - - glance:shared-db
-  - percona-cluster:shared-db
-
-- - designate:shared-db
   - percona-cluster:shared-db
 
 - - cinder:shared-db
