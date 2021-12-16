@@ -1,6 +1,7 @@
 before_deploy:
   - queens-to-rocky: &pre_deploy
     - zaza.openstack.configure.pre_deploy_certs.set_cidr_certs
+  - stein-to-train: *pre_deploy
   - train-to-ussuri: *pre_deploy
   - ussuri-to-victoria: *pre_deploy
   - victoria-to-wallaby: *pre_deploy
@@ -16,6 +17,7 @@ configure:
     - zaza.openstack.charm_tests.nova.setup.manage_ssh_key
     - zaza.openstack.charm_tests.keystone.setup.add_demo_user
     - zaza.openstack.charm_tests.keystone.setup.add_tempest_roles
+  - stein-to-train: *configure_without_vault
   - train-to-ussuri: *configure_without_vault
   - ussuri-to-victoria: &configure_with_vault
     - zaza.openstack.charm_tests.ceilometer.setup.basic_setup
@@ -37,6 +39,9 @@ tests:
     # `keystone-manage bootstrap ...`. See lp:1901982
     # - zaza.openstack.charm_tests.openstack_upgrade.tests.OpenStackUpgradeTestsByOption
     # - zaza.openstack.charm_tests.tempest.tests.TempestTestWithKeystoneV3
+
+  - stein-to-train:
+    - zaza.openstack.charm_tests.openstack_upgrade.tests.OpenStackUpgradeTestsByOption
 
   - train-to-ussuri:
     - zaza.openstack.charm_tests.tempest.tests.TempestTestWithKeystoneV3
@@ -67,6 +72,7 @@ tests:
 
 smoke_bundles:
   - queens-to-rocky: kitchen-sink-bionic-queens
+  - stein-to-train: kitchen-sink-bionic-stein
   - train-to-ussuri: kitchen-sink-bionic-train
   - ussuri-to-victoria: kitchen-sink-focal-ussuri
   - ussuri-to-victoria: kitchen-sink-focal-ussuri-ovn
