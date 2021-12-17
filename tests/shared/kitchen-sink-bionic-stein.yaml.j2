@@ -96,6 +96,8 @@ applications:
     options:
       network-manager: Neutron
       openstack-origin: *openstack-origin
+      console-access-protocol: spice
+      console-proxy-ip: local
     constraints: mem=2048
   nova-compute:
     charm: cs:~openstack-charmers-next/nova-compute
